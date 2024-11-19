@@ -193,6 +193,30 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
             }
         });
     }
+    
+    private void aplicarFiltros() {
+    String nomeFiltro = txtBuscaNome.getText().toLowerCase();
+    String vinculoFiltro = cmbVinculoPessoa.getSelectedItem() != null ? 
+                           cmbVinculoPessoa.getSelectedItem().toString() : null;
+
+    jpa.conexaoAberta();
+    
+    DefaultListModel<String> modeloLista = new DefaultListModel<>();
+    for (Pessoa pessoa : jpa.getPessoas()) {
+        boolean matchNome = pessoa.getNome().toLowerCase().contains(nomeFiltro);
+        boolean matchVinculo = (vinculoFiltro == null || vinculoFiltro.equals("Todos")) || 
+                               pessoa.getVinculo().equals(vinculoFiltro);
+        
+        if (matchNome && matchVinculo) {
+            String display = pessoa.getNome() + " - " + pessoa.getVinculo();
+            modeloLista.addElement(display);
+        }
+    }
+    lstPessoas.setModel(modeloLista);
+    
+    jpa.fecharConexao();
+}
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;

@@ -219,18 +219,18 @@ public class TelaPessoa extends javax.swing.JFrame {
         });
     }
     
-    public void carregarPessoasCadastradas(){
-        jpa.conexaoAberta();
-        
-        
-        DefaultListModel modeloLista = new DefaultListModel();
-        modeloLista.addAll(jpa.getPessoas());
-        lstPessoas.setModel(modeloLista);
-        
-        jpa.fecharConexao();
-        
-        
+    public void carregarPessoasCadastradas() {
+    jpa.conexaoAberta();
+    
+    DefaultListModel<String> modeloLista = new DefaultListModel<>();
+    for (Pessoa pessoa : jpa.getPessoas()) {
+        String display = pessoa.getNome() + " - " + pessoa.getVinculoPessoa(); // Nome e Vínculo
+        modeloLista.addElement(display);
     }
+    
+    jpa.fecharConexao();
+}
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel areaBotoes;
